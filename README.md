@@ -1,76 +1,164 @@
-# `〜` serpent
+# tw
 
-<!-- Uncomment & replace owner/repo. -->
-
-<!-- [![Build/Test](https://img.shields.io/github/workflow/status/norskeld/serpent/test?style=flat-square&colorA=22272d&colorB=22272d)](https://github.com/norskeld/serpent/actions 'Build and test workflows') -->
-<!-- [![Coverage](https://img.shields.io/coveralls/github/norskeld/serpent?style=flat-square&colorA=22272d&colorB=22272d)](https://coveralls.io/github/norskeld/serpent 'Test coverage') -->
-<!-- [![NPM](https://img.shields.io/npm/v/@nrsk/serpent?style=flat-square&colorA=22272d&colorB=22272d)](https://npm.im/@nrsk/serpent 'This package on NPM') -->
-<!-- [![Bundlephobia](https://img.shields.io/bundlephobia/minzip/@nrsk/serpent?style=flat-square&colorA=22272d&colorB=22272d&label=minzipped)](https://bundlephobia.com/package/@nrsk/serpent) -->
+<!-- [![Bundlephobia](https://img.shields.io/bundlephobia/minzip/@nrsk/tw?style=flat-square&colorA=22272d&colorB=22272d&label=minzipped)](https://bundlephobia.com/package/@nrsk/tw) -->
 <!-- ![Tree Shaking](https://img.shields.io/static/v1?label=tree+shaking&message=✔&style=flat-square&colorA=22272d&colorB=22272d) -->
 
-[![Supported Node Versions](https://img.shields.io/static/v1?label=node&message=14+|+16+|+18&style=flat-square&colorA=22272d&colorB=22272d)](https://github.com/norskeld/sigma/blob/master/package.json#L35 'Supported Node versions')
+[![Build/Test](https://img.shields.io/github/workflow/status/norskeld/tw/test?style=flat-square&colorA=22272d&colorB=22272d)](https://github.com/norskeld/tw/actions 'Build and test workflows')
+[![Coverage](https://img.shields.io/coveralls/github/norskeld/tw?style=flat-square&colorA=22272d&colorB=22272d)](https://coveralls.io/github/norskeld/tw 'Test coverage')
+[![NPM](https://img.shields.io/npm/v/@nrsk/tw?style=flat-square&colorA=22272d&colorB=22272d)](https://npm.im/@nrsk/tw 'This package on NPM')
+[![Supported Node Versions](https://img.shields.io/static/v1?label=node&message=14+|+16+|+18&style=flat-square&colorA=22272d&colorB=22272d)](https://github.com/norskeld/tw/blob/master/package.json#L24 'Supported Node versions')
 [![Semantic Release](https://img.shields.io/static/v1?label=semantic+release&message=✔&style=flat-square&colorA=22272d&colorB=22272d)](https://github.com/semantic-release/semantic-release 'This package uses semantic release to handle releasing, versioning, changelog generation and tagging')
 [![Conventional Commits](https://img.shields.io/static/v1?label=conventional+commits&message=✔&style=flat-square&colorA=22272d&colorB=22272d)](https://conventionalcommits.org 'This package follows the conventional commits spec and guidelines')
 
-Yet another TypeScript library starter with conventional goodies and automatic semantic releases.
+Weird helpers for working with [Tailwind] in [Astro]-only components.
+
+## Motivation
+
+Yeah, it kinda reminds CSS-in-JS (and I honestly hate it), but this is somehow better for my eye than filling the markup with dozens of classes and making it unreadable even with the text wrap on.
+
+## Installation
+
+Just use your favorite package manager:
+
+```bash
+npm i @nrsk/tw
+```
+
+## Configuration
+
+After that you will likely want to configure VS Code to make Wailwind intellisense work with `` tw`...` `` tagged templates and Astro class-attributes.
+
+Just add these two lines into your `.vscode/settings.json`:
+
+```jsonc
+{
+  // This is to make tailwind intellisense work with special Astro's "class:list" attributes.
+  "tailwindCSS.classAttributes": ["class", "className", "class:list"],
+
+  // This is to make tailwind intellisense work with tw`...` utility.
+  "tailwindCSS.experimental.classRegex": ["[tT]w`([^`]+)"]
+}
+```
 
 ## Usage
 
-Create your own repo [using this one as a template][use-template], clone it, [make necessary changes](#edits), install dependencies and you are set.
+This library exposes two functions: `tw` and `withVariables`.
 
-## Features
+### `tw`
 
-What's inside:
+This is a tagged template that allows you to write something like this in your Astro components:
 
-- **[TypeScript]** with **[tsup]** for bundling (CJS/ESM) and **[tsx]** (for executing `.ts` files).
-- **[Vitest]**: for testing and generating coverage report, by default it runs in watch mode (behaves properly in CI).
-- **[ESLint]**: with TypeScript and Prettier plugins, extends only built-in recommended configs.
-- **[Prettier]**: very basic config, feel free to adjust as you want.
-- **[commitlint]**: for linting commits, by default it uses [Angular preset][commitlint-preset].
-- **[semantic-release]**: for generating `CHANGELOG.md` and [handling the whole releasing process][semantic-release-highlights] based on [conventional commits][cc].
-- **[husky]** + **[lint-staged]**: for fixing and formatting your code before committing.
-- **[EditorConfig]**: handy little thing to make things a bit more consistent.
+```astro
+---
+import { tw } from '@nrsk/tw'
 
-Also:
+import type { ArticleEntry } from '@/api/content/articles'
 
-- **[.vscode](.vscode)**: some handy settings for Visual Studio Code.
-- **[.scripts/release](.scripts/release.ts)**: custom script to help **semantic-release** produce flat and tidy tarballs.
-- **[.github/workflows](.github/workflows)**: basic configs for:
-  - Testing and building on **node@16**;
-  - Releasing to **npm** with **semantic-release**.
+import CardGrid from '@/components/CardGrid.astro'
+import Header from '@/components/Header.astro'
+import Link from '@/components/Link.astro'
 
-## Edits
+import RecentArticlesCard from './RecentArticlesCard.astro'
 
-You'll have to make some changes right after generating your own repository using this template.
+export interface Props {
+  items: Array<ArticleEntry>
+}
 
-- **[README.md](README.md)**: change as you want, you may want to check [this site][readme] and [this awesome-readme list][readme-awesome] for examples of good readmes.
-- **[LICENSE](LICENSE)**: change as you want and don't forget to mention it in README.
-- **[package.json](package.json)**: change `name`, `description`, `repository.url`, `keywords`, `author`, `bugs.url`, `homepage`.
-- **[.github/workflows](.github/workflows)**: either remove these, replace with your own CI configuration or change as you need.
-  - [semantic-release has recipes and instructions][semantic-recipes] for popular CI services.
+const { items } = Astro.props
+
+const sectionClasses = tw`
+  flex flex-col gap-6
+`
+
+const noteClasses = tw`
+  text-gray-700 dark:text-gray-300
+`
+
+const headingClasses = tw`
+  text-2xl md:text-4xl font-bold tracking-tight
+  text-black dark:text-white
+`
+
+const linkClasses = tw`
+  group transition-[color]
+  text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200
+`
+
+const linkArrowClasses = tw`
+  group-hover:ml-1
+  font-semibold transition-[margin-left]
+`
+---
+
+<section class={sectionClasses}>
+  <Header>
+    <h2 slot="heading" class={headingClasses}>
+      Recent articles
+    </h2>
+
+    <p slot="sub" class={noteClasses}>
+      I occasionally write about <strong>Rust</strong>, <strong>functional programming</strong>,
+      and <strong>front-end</strong> stuff.
+    </p>
+  </Header>
+
+  <CardGrid>
+    {items.map((article) => <RecentArticlesCard item={article} />)}
+  </CardGrid>
+
+  <footer>
+    <Link to="/blog" class={linkClasses}>
+      Read all articles <span class={linkArrowClasses}>&srarr;</span>
+    </Link>
+  </footer>
+</section>
+```
+
+### `withVariables`
+
+Allows to "inject" CSS variables into `` tw`...` `` scope to avoid issues with tailwind sometimes not recognizing string interpolations. Example:
+
+```astro
+---
+import { withVariables } from '@nrsk/tw'
+
+const colors = ['#3178c6', '#4c83bd'] as const
+
+// `withVariables` returns `tw` function...
+const withColorsTw = withVariables({
+  '--color-light': colors.at(0) ?? 'currentColor',
+  '--color-dark': colors.at(1) ?? 'currentColor',
+})
+
+// ...so it can be used as usual, but `languageClasses` will be not a string, but an object:
+//
+// {
+//    class: 'text-[color:var(--color-light)] dark:text-[color:v (--color-dark)]',
+//    style: {
+//      '--color-light': '#3178c6',
+//      '--color-dark': '#4c83bd',
+//    }
+// }
+const languageClasses = withColorsTw`
+  text-[color:var(--color-light)]
+  dark:text-[color:var(--color-dark)]
+`
+---
+
+<!-- And in the end `languageClasses` can be either expanded via spread... -->
+<span {...languageClasses}>...</span>
+
+<!-- ...or used manually. -->
+<span class={languageClasses.class} style={languageClasses.style}>
+  ...
+</span>
+```
 
 ## License
 
-[MIT](LICENSE) by default, but you may want to [consider using something else][choose-license].
+[MIT](LICENSE).
 
 <!-- Links. -->
 
-[use-template]: https://github.com/norskeld/serpent/generate
-[typescript]: https://typescriptlang.org
-[tsup]: https://github.com/egoist/tsup
-[tsx]: https://github.com/esbuild-kit/tsx
-[vitest]: https://vitest.dev
-[commitlint]: https://github.com/conventional-changelog/commitlint
-[commitlint-preset]: https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-angular
-[semantic-release]: https://semantic-release.gitbook.io/semantic-release
-[eslint]: https://eslint.org
-[prettier]: https://prettier.io
-[husky]: https://github.com/typicode/husky
-[lint-staged]: https://github.com/okonet/lint-staged
-[editorconfig]: https://editorconfig.org
-[semantic-recipes]: https://semantic-release.gitbook.io/semantic-release/recipes/recipes
-[readme]: https://makeareadme.com
-[readme-awesome]: https://github.com/matiassingers/awesome-readme
-[choose-license]: https://choosealicense.com
-[semantic-release-highlights]: https://semantic-release.gitbook.io/semantic-release/#highlights
-[cc]: https://conventionalcommits.org
+[tailwind]: https://tailwindcss.com
+[astro]: https://astro.build
