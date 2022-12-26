@@ -3,7 +3,7 @@
 <!-- [![Bundlephobia](https://img.shields.io/bundlephobia/minzip/@nrsk/tw?style=flat-square&colorA=22272d&colorB=22272d&label=minzipped)](https://bundlephobia.com/package/@nrsk/tw) -->
 <!-- ![Tree Shaking](https://img.shields.io/static/v1?label=tree+shaking&message=✔&style=flat-square&colorA=22272d&colorB=22272d) -->
 
-[![Build/Test](https://img.shields.io/github/workflow/status/norskeld/tw/test?style=flat-square&colorA=22272d&colorB=22272d)](https://github.com/norskeld/tw/actions 'Build and test workflows')
+[![Build/Test](https://img.shields.io/github/actions/workflow/status/norskeld/tw/test.yml?style=flat-square&colorA=22272d&colorB=22272d)](https://github.com/norskeld/tw/actions 'Build and test workflows')
 [![Coverage](https://img.shields.io/coverallsCoverage/github/norskeld/tw?style=flat-square&colorA=22272d&colorB=22272d)](https://coveralls.io/github/norskeld/tw 'Test coverage')
 [![NPM](https://img.shields.io/npm/v/@nrsk/tw?style=flat-square&colorA=22272d&colorB=22272d)](https://npm.im/@nrsk/tw 'This package on NPM')
 [![Supported Node Versions](https://img.shields.io/static/v1?label=node&message=14+|+16+|+18&style=flat-square&colorA=22272d&colorB=22272d)](https://github.com/norskeld/tw/blob/master/package.json#L24 'Supported Node versions')
